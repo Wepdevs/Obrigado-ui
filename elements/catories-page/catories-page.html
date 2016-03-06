@@ -1,0 +1,168 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+
+
+
+
+<dom-module id="catories-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+        height:100vh;
+        width:100%;
+        
+      }
+
+    iron-list {
+
+      margin-top:12px;
+      @apply(--layout-fit);
+
+
+    }
+
+    .subItem {padding:16px;@apply(--shadow-elevation-2dp);
+      border-radius:2px;
+      border-left:4px solid;
+
+      height:64px;
+      @apply(--layout-horizontal);
+      position: relative;
+    
+        
+    }
+
+    .item {
+      padding:4px;
+      cursor:pointer;     
+      @apply(shadow-elevation-2dp);
+      
+
+    }
+
+    .firstRow {
+
+      
+      line-height:24px;
+    }
+
+    .categoryTitle {
+         text-transform: uppercase;
+         font-weight:500;
+         line-height:24px;  
+         font-size:20px;  
+    }
+
+    .category {
+
+   
+          margin-left:8px;     
+         @apply(--layout-vertical);
+
+    }
+
+    .categoryDescription {
+
+        margin-top:4px;
+        font-size:11px;
+        color:rgb(190,190,190);
+
+    }
+
+    .categoryInfos {
+
+
+        margin-top:8px;
+        @apply(--layout-horizontal);
+        font-size:13px;
+     
+
+
+    }
+
+    .categoryInfos > iron-icon{
+
+        margin-right:8px;
+        height:16px;
+        width:16px;
+
+    }
+
+    </style>
+     <firebase-collection id="ref"
+                             location="https://popping-heat-2481.firebaseio.com/Categories/"
+                             data="{{categories}}">
+    </firebase-collection>
+  <iron-list items="[[categories]]" as="item">
+      <template>
+
+        <div class="item" on-tap="categorySelected">
+     
+        <div class="subItem" style$="{{computeLeftBorderColor(item)}}">
+        <paper-ripple></paper-ripple>
+
+      
+        <iron-icon icon="maps:local-dining"></iron-icon>
+        <div class="category flex">
+          <div class="categoryTitle">[[getCategory(item)]]</div>
+          <div class="categoryDescription"> 
+            Why I am here?? Are you ready??
+
+          </div>
+          <div class="categoryInfos">
+            <iron-icon icon="shopping-cart"></iron-icon> 
+            <div class="number">14</div>
+            <div style="width:12px"></div>
+            <iron-icon icon="icons:star"></iron-icon> 
+
+
+          </div>
+          </div>
+          <div style="height:64px;line-height:64px"><iron-icon icon="icons:chevron-right"></iron-icon>
+        </div>
+      </template>
+    </iron-list>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      getCategory:function(item) {
+        console.log(item)
+        return item[this.motherLanguage]
+
+      },
+      is: 'catories-page',
+
+      computeLeftBorderColor:function(i) {
+          if (i.english=="school")
+          return "border-color:red"
+          if (i.english=="Job") return "border-color:blue"
+          return "border-color:green"  
+      },
+
+      categorySelected:function(e) {
+        this.fire("category-selected",e.model.item)
+      },
+
+      properties: {
+        motherLanguage:{value:"italiano"},
+        categories:{value:[]}
+      }
+    });
+  })();
+  </script>
+</dom-module>

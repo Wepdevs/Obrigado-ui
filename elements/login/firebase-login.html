@@ -1,0 +1,53 @@
+<link rel="import" href="../../bower_components/firebase-element/firebase-auth.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<dom-module id="firebase-login">
+
+	<template>
+		<firebase-auth id="auth" provider="password"
+					location="https://popping-heat-2481.firebaseio.com/Languages/"
+					status-known="{{statusKnown}}"
+					user="{{user}}">
+		</firebase-auth>
+
+
+	</template>
+
+	<script>
+		Polymer({
+			is: "firebase-login",
+
+			properties: {
+
+				statusKnown: {
+       	 			type: Boolean
+      			},
+      			user: {
+			        type: Object,
+			        value: null
+			    },
+			},
+
+			login: function(){
+				this.$.auth.login({email: 'walter.miani@gmail.com', password: 'walter.miani@gmail.com'});
+
+			},
+
+			logout: function(){
+
+				this.$.auth.logout();
+			},
+
+			computeLoginStatus: function(statusKnown, user) {
+		      if (statusKnown && user) {
+		        return 'Logged in';
+		      }
+		      if (statusKnown) {
+		        return 'Logged out';
+		      }
+		      return 'Unknown (checking status...)';
+		    }
+		});
+
+	</script>
+</dom-module>
+
