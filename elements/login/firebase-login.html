@@ -1,5 +1,6 @@
-<link rel="import" href="../../bower_components/firebase-element/firebase-auth.html">
+
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-auth.html">
 <dom-module id="firebase-login">
 
 	<template>
@@ -15,7 +16,8 @@
 	<script>
 		Polymer({
 			is: "firebase-login",
-
+			ready:function() {}
+			,
 			properties: {
 
 				statusKnown: {
@@ -28,6 +30,7 @@
 			},
 
 			login: function(){
+				console.log("logging in")
 				this.$.auth.login({email: 'walter.miani@gmail.com', password: 'walter.miani@gmail.com'});
 
 			},
